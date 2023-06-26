@@ -18,7 +18,8 @@ class Loan_update_history(db.Model):
     state = db.Column(db.Integer, nullable=False)
     create_timestamp = db.Column(db.DateTime, nullable=False)
 
-    def __init__(self, loan_amount, duration, loan_id, state=LOAN_STATUS['New'], loan_type=LOAN_TYPES['Home_loan']):
+    def __init__(self, loan_amount, duration, loan_id, state=LOAN_STATUS
+                 ['New'], loan_type=LOAN_TYPES['Home_loan']):
         self.loan_type = loan_type
         self.loan_amount = loan_amount
         self.duration = duration
@@ -45,14 +46,16 @@ class Loan(db.Model):
     create_timestamp = db.Column(db.DateTime, nullable=False)
     update_timestamp = db.Column(db.DateTime, nullable=False)
 
-    def __init__(self, loan_amount, duration, customer_id, state=LOAN_STATUS['New'], loan_type=LOAN_TYPES['Home_loan']):
+    def __init__(self, loan_amount, duration, customer_id,
+                 state=LOAN_STATUS['New'], loan_type=LOAN_TYPES['Home_loan']):
         self.loan_type = loan_type
         self.roi = ROI[loan_type]
         self.loan_amount = loan_amount
         self.duration = duration
         self.state = state
         self.emi = loan_amount * (ROI[loan_type]/(12*100)) * (
-            (1+(ROI[loan_type]/(12*100)))**duration)/((1+(ROI[loan_type]/(12*100)))**duration - 1)
+            (1+(ROI[loan_type]/(12*100)))**duration)/
+        ((1+(ROI[loan_type]/(12*100)))**duration - 1)
         self.total_payable_amount = loan_amount + \
             (loan_amount*ROI[loan_type]/(12*100)*duration)
         self.customer_id = customer_id
@@ -80,7 +83,8 @@ class Users(db.Model):
     timestamp = db.Column(db.DateTime, nullable=False)
     approved = db.Column(db.Boolean, nullable=False, default=True)
 
-    def __init__(self, username, email, phone, password, user_type=USERTYPE['Customers'], approved=True):
+    def __init__(self, username, email, phone, password,
+                 user_type=USERTYPE['Customers'], approved=True):
         self.public_id = str(uuid.uuid4())
         self.username = username
         self.email = email

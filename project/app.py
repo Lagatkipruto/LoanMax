@@ -2,6 +2,7 @@
 from functools import wraps
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
+from projects import routes
 import jwt
 import os
 
@@ -28,17 +29,19 @@ def token_required(f):
         if not token:
             return jsonify({"message": "Token is missing!"}), 401
         try:
-            data = jwt.decode(token, app.config["SECRET_KEY"], algorithms=["HS256"])
+            data = jwt.decode(token, app.config["SECRET_KEY"],
+                              algorithms=["HS256"])
             from project.models import Users
 
-            loggedInUser = Users.query.filter_by(public_id=data["public_id"]).first()
+            loggedInUser = Users.query.filter_by(public_id=data
+                                                 ["public_id"]).first()
         except Exception as ex:
             return jsonify({"message": "Token is invalid!"}), 401
         return f(loggedInUser, *args, **kwargs)
 
     return decorated
 
+
 if __name__ == '__main__':
     app.debug = True
     app.run(host='0.0.0.0', port=5000)
-from project import routes
