@@ -17,6 +17,9 @@ def register():
     # Render the registration success template
     return render_template('register.html')
 
+@app.route('/about', strict_slashes=False)
+def about():
+    return render_template('about.html')
 
 
 if __name__ == "__main__":
