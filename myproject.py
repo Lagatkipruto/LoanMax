@@ -1,9 +1,9 @@
 from flask import Flask
-from flask import render_template
+from flask import render_template, request, jsonify
 
 app = Flask(__name__)
 
-@app.route("/")
+@app.route("/", strict_slashes=False)
 def hello():
     return render_template('loan.html')
 
@@ -11,9 +11,12 @@ def hello():
 def login():
     return render_template('login.html')
 
-@app.route('/register_form', methods=['POST', 'GET'])
+@app.route('/register_form', strict_slashes=False, methods=['POST', 'GET'])
 def register():
+
+    # Render the registration success template
     return render_template('register.html')
+
 
 
 if __name__ == "__main__":
