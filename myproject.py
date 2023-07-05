@@ -21,6 +21,10 @@ def register():
 def about():
     return render_template('about.html')
 
+@app.route('/loan-eligibility Cal', strict_slashes=False)
+def calculator():
+    return render_template('features.html')
+
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0')
